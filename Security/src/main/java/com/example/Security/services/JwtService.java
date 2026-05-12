@@ -34,7 +34,7 @@ public class JwtService {
                 .signWith(getSecretKey())
                 .compact();
     }
-
+// comment added in the JWT
     private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(jwtSecretKey.getBytes(StandardCharsets.UTF_8));
     }
