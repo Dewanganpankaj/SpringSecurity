@@ -28,6 +28,10 @@ public class JwtService {
         return Jwts.builder()
                 .subject(user.getId().toString())
                 .claim("email",user.getEmail())
+                // here ae are hard coded the user role
+                // in production we are not hardcoded the role
+                // try to take in the runtime of the role
+
                 .claim("roles", Set.of("Admin", " USER"))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60))
