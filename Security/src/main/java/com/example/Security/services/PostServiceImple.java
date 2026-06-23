@@ -1,6 +1,7 @@
 package com.example.Security.services;
 import com.example.Security.dto.PostDto;
 import com.example.Security.entities.PostEntity;
+import com.example.Security.exceptions.ResourceNotFoundException;
 import com.example.Security.repositories.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,13 +33,17 @@ public class PostServiceImple implements PostService {
         return modelMapper.map(postRepository.save(postEntity), PostDto.class);
     }
 
-    @Override
-    public PostDto getPostById(Long postId) {
-        PostEntity postEntity = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+        // if  we decalre the resource not found exception so why we are going to use the runtime exception
+        @Override
+        public PostDto getPostById(Long postId) {
 
-        return modelMapper.map(postEntity, PostDto.class);
-    }
+            PostEntity postEntity = postRepository.findById(postId)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(
+                                    "Post not found with id: " + postId));
+
+            return modelMapper.map(postEntity, PostDto.class);
+        }
 
     @Override
     public PostDto updatePost(PostDto inputPost, Long postId) {
