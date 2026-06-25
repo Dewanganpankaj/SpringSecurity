@@ -23,8 +23,9 @@ public class WebSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/posts").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+                        .anyRequest().authenticated());
+        // this makes the login kind of page in the in memory session
+              //  .formLogin(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
