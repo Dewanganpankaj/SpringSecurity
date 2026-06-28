@@ -5,6 +5,10 @@ import com.example.Security.dto.SignUpDto;
 import com.example.Security.dto.UserDto;
 import com.example.Security.services.AuthService;
 import com.example.Security.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.security.autoconfigure.SecurityProperties;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +34,16 @@ public class AuthController {
 
     // for login mapping
     @PostMapping("/login")
-    private ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto)
+    private ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto, HttpServletRequest request, HttpServletResponse response)
     {
         System.out.println("Login API Hit");
         String token = authService.login(loginDto);
+        // add the cookie
+        Cookie cookie = new Cookie("token", token);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+
         return ResponseEntity.ok(token);
     }
 
