@@ -17,7 +17,7 @@ public class JwtService {
     // in the JWT token file you have to add the two filed
 
     // import the jwt secret key here
-    @Value("${jwt.SecretKey}")
+    @Value("${jwt.secret-key}")
     private String jwtSecretKey;
 
     // hash the secret kry
