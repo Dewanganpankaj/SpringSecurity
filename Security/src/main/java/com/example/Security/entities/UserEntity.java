@@ -1,6 +1,8 @@
 package com.example.Security.entities;
 
+import com.example.Security.entities.Enum.Permission;
 import com.example.Security.entities.Enum.Role;
+import com.example.Security.utils.PermissionMapping;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,12 +40,18 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.name()))
-                .collect(Collectors.toSet());
+         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+         role.forEach(
+                 role ->{
+                    Set<SimpleGrantedAuthority> permissions = PermissionMapping.getAuthoritiesForRole(role);
+                    authorities.addAll(permissions);
+                 }
 
+         );
+         return authorities;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.Security.dto;
 
+import com.example.Security.entities.Enum.Permission;
 import com.example.Security.entities.Enum.Role;
 import lombok.Data;
 
@@ -12,4 +13,5 @@ public class SignUpDto {
     private String password;
     private String name;
     private Set<Role>roles;
+    private Set<Permission>permissions;
 }
