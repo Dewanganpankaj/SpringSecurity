@@ -1,6 +1,9 @@
 package com.example.Security.dto;
 
+import com.example.Security.entities.Enum.Role;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class SignUpDto {
@@ -8,5 +11,5 @@ public class SignUpDto {
     private String email;
     private String password;
     private String name;
-
+    private Set<Role>roles;
 }

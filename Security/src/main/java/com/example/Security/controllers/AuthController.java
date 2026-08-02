@@ -72,7 +72,7 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
-    // now makin request for the referesh token
+    // now making request for the referesh token
     @PostMapping("/refresh")
     private ResponseEntity<LoginResponseDto> refresh(HttpServletRequest request)
     {

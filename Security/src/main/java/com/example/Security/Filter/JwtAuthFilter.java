@@ -50,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
            {
                UserEntity user = userService.getUserID(userid);
                // piut the user inside the prinf security context holder
-               UsernamePasswordAuthenticationToken authecationToken = new UsernamePasswordAuthenticationToken(user,null,null);
+               UsernamePasswordAuthenticationToken authecationToken = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
                // this when you are handling with the network and DDOs realted attack
                authecationToken.setDetails(
                        new WebAuthenticationDetailsSource().buildDetails(request)
