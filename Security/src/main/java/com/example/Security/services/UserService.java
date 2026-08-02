@@ -7,6 +7,7 @@ import com.example.Security.exceptions.ResourceNotFoundException;
 import com.example.Security.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +31,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByemail(username)
-                .orElseThrow(()-> new ResourceNotFoundException("Resource not found" + username + "Not Found"));
+                .orElseThrow(()-> new BadCredentialsException("Resource not found" + username + "Not Found"));
     }
 
 

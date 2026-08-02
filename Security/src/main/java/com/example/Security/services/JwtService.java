@@ -28,7 +28,8 @@ public class JwtService {
 
 
     // first create the JWT token
-    public String generateToken(UserEntity user)
+    // here we can see only one token is used
+    public String generateAccessToken(UserEntity user)
     {
        return Jwts.builder()
                 .subject(user.getId().toString())
@@ -36,9 +37,20 @@ public class JwtService {
                 .claim("email",user.getEmail())
                 .claim("roles", Set.of("ADMIN","USER"))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 *60))
+                .expiration(new Date(System.currentTimeMillis() + 1000 *60*10)) // 10 minute
                 .signWith(getJwtSecretKey())
                .compact();
+    }
+    // long term refresh token
+    public String generateRefreshToken(UserEntity user)
+    {
+        return Jwts.builder()
+                .subject(user.getId().toString())
+                // this is just type of payload
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000L *60 * 60 * 24 * 30 * 6 )) // this is f or the 6 month
+                .signWith(getJwtSecretKey())
+                .compact();
     }
 
     // verify the JWT token
